@@ -59,7 +59,7 @@ namespace ELCAPITAL.Controllers
             {
                 _context.Add(personaJuridica);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index","Acceso");
             }
             return View(personaJuridica);
         }

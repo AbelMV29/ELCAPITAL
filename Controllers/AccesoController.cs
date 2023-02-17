@@ -31,10 +31,8 @@ namespace ELCAPITAL.Controllers
                 {
                     new Claim("Id",existeCliente.IdCliente.ToString())
                 };
-                var claimsIdentity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity));
-                HttpContext.Session.SetInt32("Idcliente",existeCliente.IdCliente);
+                var claimsIndetity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIndetity));
 
                 return RedirectToAction("Index","Home");
             }

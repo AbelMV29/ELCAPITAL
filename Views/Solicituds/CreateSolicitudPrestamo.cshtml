@@ -1,0 +1,23 @@
+﻿@model Prestamo
+@{
+    ViewData["Title"] = "CreateSolicitudPrestamo";
+}
+
+<h3>SOLICITAR UN PRESTAMO</h3>
+<div class="row">
+    <div class="col-md-4">
+        <p>AL REALIZAR ESTA ACCION SE ENVIARA UNA SOLICITUD AL BACK END EL CUAL TE PERMITIRA 
+            LA OBTENCION DE UN PRESTAMO
+        </p>
+        <form asp-action="CreateSolicitudPrestamo" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label class="form-check-label">
+                    <input class="form-check-input" asp-for="EsPrendario" /> @Html.DisplayNameFor(model => model.EsPrendario)
+                </label>
+            <div class="form-group">
+                <input type="submit" value="SOLICITAR" class="btn btn-dark"/>
+            </div>
+        </form>
+    </div>
+</div>
+

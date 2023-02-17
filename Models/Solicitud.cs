@@ -16,6 +16,6 @@ namespace ELCAPITAL.Models
         [ForeignKey("IdCliente")]
         public virtual Cliente Cliente { get; set; }
         public virtual FormularioRaiz? FormularioRaiz { get; set; }
-        public virtual FormularioRechazo? FormularioRechazo { get;}
+        public virtual FormularioRechazo? FormularioRechazo { get; set; }
     }
 }

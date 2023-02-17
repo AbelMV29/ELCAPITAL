@@ -12,7 +12,7 @@ build_property.RootNamespace = ELCAPITAL
 build_property.ProjectDir = D:\ELCAPITAL\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
-build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = D:\ELCAPITAL
 build_property._RazorSourceGeneratorDebug = 
 
@@ -40,12 +40,44 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/ELCAPITAL/Views/FormularioRaizs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybXVsYXJpb1JhaXpzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/FormularioRaizs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybXVsYXJpb1JhaXpzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/FormularioRaizs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybXVsYXJpb1JhaXpzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/FormularioRaizs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybXVsYXJpb1JhaXpzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/FormularioRaizs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9ybXVsYXJpb1JhaXpzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/ELCAPITAL/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/ELCAPITAL/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/Paquetes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFxdWV0ZXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/Paquetes/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFxdWV0ZXNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/Paquetes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFxdWV0ZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/ELCAPITAL/Views/PersonaFisicas/Create.cshtml]
@@ -88,12 +120,72 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyc29uYUp1cmlkaWNhc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/ELCAPITAL/Views/Prestamoes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlc3RhbW9lc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/Prestamoes/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlc3RhbW9lc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/Prestamoes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJlc3RhbW9lc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/ELCAPITAL/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/ELCAPITAL/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/Solicituds/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/Solicituds/CreateSolicitudPaquete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkc1xDcmVhdGVTb2xpY2l0dWRQYXF1ZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/Solicituds/CreateSolicitudPrestamo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkc1xDcmVhdGVTb2xpY2l0dWRQcmVzdGFtby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/Solicituds/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/Solicituds/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/Solicituds/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/Solicituds/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29saWNpdHVkc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/TarjetaDeCreditoes/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyamV0YURlQ3JlZGl0b2VzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/TarjetaDeCreditoes/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyamV0YURlQ3JlZGl0b2VzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/TarjetaDeCreditoes/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyamV0YURlQ3JlZGl0b2VzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/TarjetaDeCreditoes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyamV0YURlQ3JlZGl0b2VzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ELCAPITAL/Views/TarjetaDeCreditoes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyamV0YURlQ3JlZGl0b2VzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/ELCAPITAL/Views/_ViewImports.cshtml]

@@ -1,0 +1,23 @@
+﻿@model Paquete
+@{
+    ViewData["Title"] = "CreateSolicitudPaquete";
+}
+
+<h3>SOLICITAR UN PAQUETE</h3>
+<div class="row">
+    <div class="col-md-4">
+        <p>AL REALIZAR ESTA ACCION SE ENVIARA UNA SOLICITUD AL BACK END EL CUAL TE PERMITIRA 
+            LA OBTENCION DE UN PAQUETE
+        </p>
+        <form asp-action="CreateSolicitudPaquete" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label class="form-check-label">
+                    <input class="form-check-input" asp-for="EsCrediticio" /> @Html.DisplayNameFor(model => model.EsCrediticio)
+                </label>
+            <div class="form-group">
+                <input type="submit" value="SOLICITAR" class="btn btn-dark"/>
+            </div>
+        </form>
+    </div>
+</div>
+

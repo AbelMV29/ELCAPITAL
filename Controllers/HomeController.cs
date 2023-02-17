@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ELCAPITAL.Controllers
 {
-
     [Authorize]
     public class HomeController : Controller
     {
@@ -15,7 +14,6 @@ namespace ELCAPITAL.Controllers
         {
             _logger = logger;
         }
-
         public IActionResult Index()
         {
             return View();

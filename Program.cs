@@ -13,10 +13,13 @@ namespace ELCAPITAL
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {
                 options.LoginPath="/Acceso/Index";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                options.AccessDeniedPath= "/Home/Privacy";
             });
             builder.Services.AddDbContext<ELCAPITALContext>(
                 options =>
@@ -42,10 +45,13 @@ namespace ELCAPITAL
 
             app.UseRouting();
 
-            
-            
+
+
+
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseAuthentication();
+
 
             app.MapControllerRoute(
                 name: "default",

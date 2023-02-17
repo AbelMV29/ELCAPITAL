@@ -60,7 +60,7 @@ namespace ELCAPITAL.Controllers
             {
                 _context.Add(personaFisica);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index","Acceso");
             }
             return View(personaFisica);
         }

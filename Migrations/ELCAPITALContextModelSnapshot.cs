@@ -226,6 +226,16 @@ namespace ELCAPITAL.Migrations
                     b.HasDiscriminator().HasValue("Paquete");
                 });
 
+            modelBuilder.Entity("ELCAPITAL.Models.Prestamo", b =>
+                {
+                    b.HasBaseType("ELCAPITAL.Models.Producto");
+
+                    b.Property<bool>("EsPrendario")
+                        .HasColumnType("bit");
+
+                    b.HasDiscriminator().HasValue("Prestamo");
+                });
+
             modelBuilder.Entity("ELCAPITAL.Models.FormularioRaiz", b =>
                 {
                     b.HasOne("ELCAPITAL.Models.Solicitud", "Solicitud")

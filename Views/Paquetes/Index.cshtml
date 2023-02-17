@@ -1,0 +1,33 @@
+﻿@model List<ELCAPITAL.Models.Paquete>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>MIS PAQUETES</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id Producto
+            </th>
+            <th>
+                Es Crediticio
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdProducto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EsCrediticio)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

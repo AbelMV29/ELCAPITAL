@@ -3,12 +3,39 @@
 }
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-6">
-
+    <div class="row mt-4 gx-5 justify-content-center">
+        <div class="col-2 border border-secondary border border-2 p-3 mx-1">
+            <div class="row">
+                <div class="col">
+                    <p>VER MIS PAQUETES</p>
+                    <a asp-action="Index" asp-controller="Paquetes"><button type="button" class="btn btn-dark">MIS PAQUETES</button></a>
+                </div>
+            </div>
         </div>
-        <div class="col-6">
-
+        <div class="col-2 border border-secondary border border-2 p-3 mx-1">
+            <div class="row">
+                <div class="col">
+                    <p>VER MIS PRESTAMOS</p>
+                    <a asp-action="Index" asp-controller="Prestamoes"><button type="button" class="btn btn-dark">MIS PRESTAMOS</button></a>
+                </div>
+            </div>
+            </div>
+        <div class="col-2 border border-secondary border border-2 p-3 mx-1">
+            <div class="row">
+                <div class="col">
+                    <p>SOLICITAR PAQUETE</p>
+                    <a asp-action="CreateSolicitudPaquete" asp-controller="Solicituds"><button type="button" class="btn btn-dark">SOLICITAR</button></a>
+                </div>
+                </div>
+            </div>
+            <div class="col-2 border border-secondary border border-2 p-3 mx-1">
+        <div class="row">
+         <div class="col">
+                    <p>SOLICITAR PRESTAMO</p>
+                    <a asp-action="CreateSolicitudPrestamo" asp-controller="Solicituds"><button type="button" class="btn btn-dark">SOLICITAR</button></a>
+                </div>
+                </div>
+            </div>
         </div>
     </div>   
 </div>

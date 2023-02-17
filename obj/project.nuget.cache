@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "KnIa1pWEJv1vZGrAYwuvBV0YRUbX1Pbe4MAfMzjHu3ZYTMGQgteyuaahuPymBC7UmeYOex+AIyGGgnfaUcKgww==",
+  "dgSpecHash": "A0gaamwXpkk+59oyxQjpsIrQs1JIAYRSJsvBIXZiT1na1Cy8/LKGzT3Ko3V3/SbeofeO0Vtsk7/fZvyHGj41aQ==",
   "success": true,
   "projectFilePath": "D:\\ELCAPITAL\\ELCAPITAL.csproj",
   "expectedPackageFiles": [
@@ -10,7 +10,9 @@
     "C:\\Users\\ABEL_\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\ABEL_\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\ABEL_\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",
-    "C:\\Users\\ABEL_\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.0\\microsoft.aspnetcore.razor.language.6.0.0.nupkg.sha512",
+    "C:\\Users\\ABEL_\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.extensions\\6.0.14\\microsoft.aspnetcore.mvc.razor.extensions.6.0.14.nupkg.sha512",
+    "C:\\Users\\ABEL_\\.nuget\\packages\\microsoft.aspnetcore.mvc.razor.runtimecompilation\\6.0.14\\microsoft.aspnetcore.mvc.razor.runtimecompilation.6.0.14.nupkg.sha512",
+    "C:\\Users\\ABEL_\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.14\\microsoft.aspnetcore.razor.language.6.0.14.nupkg.sha512",
     "C:\\Users\\ABEL_\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\ABEL_\\.nuget\\packages\\microsoft.build\\17.3.2\\microsoft.build.17.3.2.nupkg.sha512",
     "C:\\Users\\ABEL_\\.nuget\\packages\\microsoft.build.framework\\17.3.2\\microsoft.build.framework.17.3.2.nupkg.sha512",
@@ -22,7 +24,7 @@
     "C:\\Users\\ABEL_\\.nuget\\packages\\microsoft.codeanalysis.csharp.scripting\\4.0.0\\microsoft.codeanalysis.csharp.scripting.4.0.0.nupkg.sha512",
     "C:\\Users\\ABEL_\\.nuget\\packages\\microsoft.codeanalysis.csharp.workspaces\\4.0.0\\microsoft.codeanalysis.csharp.workspaces.4.0.0.nupkg.sha512",
     "C:\\Users\\ABEL_\\.nuget\\packages\\microsoft.codeanalysis.features\\4.0.0\\microsoft.codeanalysis.features.4.0.0.nupkg.sha512",
-    "C:\\Users\\ABEL_\\.nuget\\packages\\microsoft.codeanalysis.razor\\6.0.0\\microsoft.codeanalysis.razor.6.0.0.nupkg.sha512",
+    "C:\\Users\\ABEL_\\.nuget\\packages\\microsoft.codeanalysis.razor\\6.0.14\\microsoft.codeanalysis.razor.6.0.14.nupkg.sha512",
     "C:\\Users\\ABEL_\\.nuget\\packages\\microsoft.codeanalysis.scripting.common\\4.0.0\\microsoft.codeanalysis.scripting.common.4.0.0.nupkg.sha512",
     "C:\\Users\\ABEL_\\.nuget\\packages\\microsoft.codeanalysis.visualbasic\\4.0.0\\microsoft.codeanalysis.visualbasic.4.0.0.nupkg.sha512",
     "C:\\Users\\ABEL_\\.nuget\\packages\\microsoft.codeanalysis.visualbasic.features\\4.0.0\\microsoft.codeanalysis.visualbasic.features.4.0.0.nupkg.sha512",

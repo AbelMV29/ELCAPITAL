@@ -64,5 +64,7 @@ namespace ELCAPITAL.Models
         public DbSet<ELCAPITAL.Models.PersonaJuridica> PersonaJuridica { get; set; }
 
         public DbSet<ELCAPITAL.Models.Paquete> Paquete { get; set; }
+
+        public DbSet<ELCAPITAL.Models.Prestamo> Prestamo { get; set; }
     }
 }
