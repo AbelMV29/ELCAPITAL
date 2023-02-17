@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ELCAPITAL.Migrations
 {
     [DbContext(typeof(ELCAPITALContext))]
-    [Migration("20230217062609_Dbv2")]
-    partial class Dbv2
+    [Migration("20230217094533_Dbv1")]
+    partial class Dbv1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -158,6 +158,9 @@ namespace ELCAPITAL.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdSolicitud"));
+
+                    b.Property<bool>("EsAprobada")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("FechaSolicitud")
                         .HasColumnType("datetime2");

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ELCAPITAL.Migrations
 {
     /// <inheritdoc />
-    public partial class Dbv2 : Migration
+    public partial class Dbv1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -78,6 +78,7 @@ namespace ELCAPITAL.Migrations
                     IdSolicitud = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TipoSolicitud = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EsAprobada = table.Column<bool>(type: "bit", nullable: false),
                     FechaSolicitud = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IdCliente = table.Column<int>(type: "int", nullable: false)
                 },

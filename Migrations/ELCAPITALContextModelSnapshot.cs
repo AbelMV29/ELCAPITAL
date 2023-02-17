@@ -156,6 +156,9 @@ namespace ELCAPITAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdSolicitud"));
 
+                    b.Property<bool>("EsAprobada")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("FechaSolicitud")
                         .HasColumnType("datetime2");
 

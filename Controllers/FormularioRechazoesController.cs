@@ -11,90 +11,90 @@ using Microsoft.AspNetCore.Authorization;
 namespace ELCAPITAL.Controllers
 {
     [Authorize]
-    public class FormularioRaizsController : Controller
+    public class FormularioRechazoesController : Controller
     {
         private readonly ELCAPITALContext _context;
 
-        public FormularioRaizsController(ELCAPITALContext context)
+        public FormularioRechazoesController(ELCAPITALContext context)
         {
             _context = context;
         }
 
-        // GET: FormularioRaizs
+        // GET: FormularioRechazoes
         public async Task<IActionResult> Index()
         {
-            var eLCAPITALContext = _context.FormularioRaizs.Include(f => f.Solicitud);
+            var eLCAPITALContext = _context.FormularioRechazos.Include(f => f.Solicitud);
             return View(await eLCAPITALContext.ToListAsync());
         }
 
-        // GET: FormularioRaizs/Details/5
+        // GET: FormularioRechazoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.FormularioRaizs == null)
+            if (id == null || _context.FormularioRechazos == null)
             {
                 return NotFound();
             }
 
-            var formularioRaiz = await _context.FormularioRaizs
+            var formularioRechazo = await _context.FormularioRechazos
                 .Include(f => f.Solicitud)
-                .FirstOrDefaultAsync(m => m.IdFormularioRaiz == id);
-            if (formularioRaiz == null)
+                .FirstOrDefaultAsync(m => m.IdFormularioRechazo == id);
+            if (formularioRechazo == null)
             {
                 return NotFound();
             }
 
-            return View(formularioRaiz);
+            return View(formularioRechazo);
         }
 
-        // GET: FormularioRaizs/Create
+        // GET: FormularioRechazoes/Create
         public IActionResult Create()
         {
             ViewData["IdSolicitud"] = new SelectList(_context.Solicitudes, "IdSolicitud", "TipoSolicitud");
             return View();
         }
 
-        // POST: FormularioRaizs/Create
+        // POST: FormularioRechazoes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdFormularioRaiz,FechaAprobacion,IdSolicitud")] FormularioRaiz formularioRaiz)
+        public async Task<IActionResult> Create([Bind("IdFormularioRechazo,Motivo,FechaRechazo,IdSolicitud")] FormularioRechazo formularioRechazo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(formularioRaiz);
+                _context.Add(formularioRechazo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdSolicitud"] = new SelectList(_context.Solicitudes, "IdSolicitud", "TipoSolicitud", formularioRaiz.IdSolicitud);
-            return View(formularioRaiz);
+            ViewData["IdSolicitud"] = new SelectList(_context.Solicitudes, "IdSolicitud", "TipoSolicitud", formularioRechazo.IdSolicitud);
+            return View(formularioRechazo);
         }
 
-        // GET: FormularioRaizs/Edit/5
+        // GET: FormularioRechazoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.FormularioRaizs == null)
+            if (id == null || _context.FormularioRechazos == null)
             {
                 return NotFound();
             }
 
-            var formularioRaiz = await _context.FormularioRaizs.FindAsync(id);
-            if (formularioRaiz == null)
+            var formularioRechazo = await _context.FormularioRechazos.FindAsync(id);
+            if (formularioRechazo == null)
             {
                 return NotFound();
             }
-            ViewData["IdSolicitud"] = new SelectList(_context.Solicitudes, "IdSolicitud", "TipoSolicitud", formularioRaiz.IdSolicitud);
-            return View(formularioRaiz);
+            ViewData["IdSolicitud"] = new SelectList(_context.Solicitudes, "IdSolicitud", "TipoSolicitud", formularioRechazo.IdSolicitud);
+            return View(formularioRechazo);
         }
 
-        // POST: FormularioRaizs/Edit/5
+        // POST: FormularioRechazoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdFormularioRaiz,FechaAprobacion,IdSolicitud")] FormularioRaiz formularioRaiz)
+        public async Task<IActionResult> Edit(int id, [Bind("IdFormularioRechazo,Motivo,FechaRechazo,IdSolicitud")] FormularioRechazo formularioRechazo)
         {
-            if (id != formularioRaiz.IdFormularioRaiz)
+            if (id != formularioRechazo.IdFormularioRechazo)
             {
                 return NotFound();
             }
@@ -103,12 +103,12 @@ namespace ELCAPITAL.Controllers
             {
                 try
                 {
-                    _context.Update(formularioRaiz);
+                    _context.Update(formularioRechazo);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FormularioRaizExists(formularioRaiz.IdFormularioRaiz))
+                    if (!FormularioRechazoExists(formularioRechazo.IdFormularioRechazo))
                     {
                         return NotFound();
                     }
@@ -119,51 +119,51 @@ namespace ELCAPITAL.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdSolicitud"] = new SelectList(_context.Solicitudes, "IdSolicitud", "TipoSolicitud", formularioRaiz.IdSolicitud);
-            return View(formularioRaiz);
+            ViewData["IdSolicitud"] = new SelectList(_context.Solicitudes, "IdSolicitud", "TipoSolicitud", formularioRechazo.IdSolicitud);
+            return View(formularioRechazo);
         }
 
-        // GET: FormularioRaizs/Delete/5
+        // GET: FormularioRechazoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.FormularioRaizs == null)
+            if (id == null || _context.FormularioRechazos == null)
             {
                 return NotFound();
             }
 
-            var formularioRaiz = await _context.FormularioRaizs
+            var formularioRechazo = await _context.FormularioRechazos
                 .Include(f => f.Solicitud)
-                .FirstOrDefaultAsync(m => m.IdFormularioRaiz == id);
-            if (formularioRaiz == null)
+                .FirstOrDefaultAsync(m => m.IdFormularioRechazo == id);
+            if (formularioRechazo == null)
             {
                 return NotFound();
             }
 
-            return View(formularioRaiz);
+            return View(formularioRechazo);
         }
 
-        // POST: FormularioRaizs/Delete/5
+        // POST: FormularioRechazoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.FormularioRaizs == null)
+            if (_context.FormularioRechazos == null)
             {
-                return Problem("Entity set 'ELCAPITALContext.FormularioRaizs'  is null.");
+                return Problem("Entity set 'ELCAPITALContext.FormularioRechazos'  is null.");
             }
-            var formularioRaiz = await _context.FormularioRaizs.FindAsync(id);
-            if (formularioRaiz != null)
+            var formularioRechazo = await _context.FormularioRechazos.FindAsync(id);
+            if (formularioRechazo != null)
             {
-                _context.FormularioRaizs.Remove(formularioRaiz);
+                _context.FormularioRechazos.Remove(formularioRechazo);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FormularioRaizExists(int id)
+        private bool FormularioRechazoExists(int id)
         {
-          return _context.FormularioRaizs.Any(e => e.IdFormularioRaiz == id);
+          return _context.FormularioRechazos.Any(e => e.IdFormularioRechazo == id);
         }
     }
 }

@@ -65,34 +65,46 @@ namespace ELCAPITAL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateSolicitudPaquete([Bind("IdSolicitud,TipoSolicitud,FechaSolicitud,IdCliente")] Solicitud solicitud,
-           [Bind("EsCrediticio,IdProducto")] Paquete paquete,FormularioRaiz formularioRaiz)
+           [Bind("EsCrediticio,IdProducto")] Paquete paquete,FormularioRaiz formularioRaiz,FormularioRechazo formularioRechazo)
         {
             Random r = new Random();
             var idclaim = User.Claims.FirstOrDefault(x => x.Type == "Id");
             solicitud.IdCliente = int.Parse(idclaim.Value);
-            paquete.IdCliente = int.Parse(idclaim.Value);
             solicitud.TipoSolicitud = "Paquete";
             solicitud.FechaSolicitud = DateTime.Now;
-
-                _context.Add(solicitud);
-            _context.Add(paquete);
+            solicitud.EsAprobada = false;
+            _context.Add(solicitud);
             await _context.SaveChangesAsync();
-            var idProducto = _context.Producto.OrderByDescending(p => p.IdProducto).FirstOrDefault();
+            var idsolicitud = _context.Solicitudes.OrderByDescending(a => a.IdSolicitud).FirstOrDefault();
 
-            var idsolicitud = _context.Solicitudes.OrderByDescending(a=>a.IdSolicitud).FirstOrDefault();
-            if (paquete.EsCrediticio)
+            if (solicitud.EsAprobada)
             {
-                for (int i = 0; i < 3; i++)
+                paquete.IdCliente = int.Parse(idclaim.Value);
+                _context.Add(paquete);
+                await _context.SaveChangesAsync();
+                var idProducto = _context.Producto.OrderByDescending(p => p.IdProducto).FirstOrDefault();
+
+                if (paquete.EsCrediticio)
                 {
-                    TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito();
-                    tarjetaDeCredito.IdProducto = idProducto.IdProducto;
-                    tarjetaDeCredito.CodigoTarjeta = r.Next(1000000, 9999999);
-                    _context.Add(tarjetaDeCredito);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito();
+                        tarjetaDeCredito.IdProducto = idProducto.IdProducto;
+                        tarjetaDeCredito.CodigoTarjeta = r.Next(1000000, 9999999);
+                        _context.Add(tarjetaDeCredito);
+                    }
+                    formularioRaiz.IdSolicitud = idsolicitud.IdSolicitud;
+                    formularioRaiz.FechaAprobacion = DateTime.Now;
+                    _context.Add(formularioRaiz);
                 }
             }
-            formularioRaiz.IdSolicitud = idsolicitud.IdSolicitud;
-            formularioRaiz.FechaAprobacion = DateTime.Now;
-            _context.Add(formularioRaiz);
+            else
+            {
+                formularioRechazo.Motivo = "No permitido";
+                formularioRechazo.FechaRechazo = DateTime.Now;
+                formularioRechazo.IdSolicitud = idsolicitud.IdSolicitud;
+                _context.Add(formularioRechazo);
+            }
             
             
             await _context.SaveChangesAsync();
@@ -101,20 +113,36 @@ namespace ELCAPITAL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateSolicitudPrestamo([Bind("IdSolicitud,TipoSolicitud,FechaSolicitud,IdCliente")] 
-        Solicitud solicitud, [Bind("EsPrendario,IdProducto")] Prestamo prestamo,FormularioRaiz formularioRaiz)
+        Solicitud solicitud, [Bind("EsPrendario,IdProducto")] Prestamo prestamo,FormularioRaiz formularioRaiz,FormularioRechazo formularioRechazo)
         {
             var idclaim = User.Claims.FirstOrDefault(x => x.Type == "Id");
             solicitud.IdCliente = int.Parse(idclaim.Value);
-            prestamo.IdCliente = int.Parse(idclaim.Value);
             solicitud.TipoSolicitud = "Prestamo";
             solicitud.FechaSolicitud = DateTime.Now;
+            solicitud.EsAprobada = true;
             _context.Add(solicitud);
-            _context.Add(prestamo);
             await _context.SaveChangesAsync();
             var idsolicitud = _context.Solicitudes.OrderByDescending(a => a.IdSolicitud).FirstOrDefault();
-            formularioRaiz.IdSolicitud = idsolicitud.IdSolicitud;
-            formularioRaiz.FechaAprobacion = DateTime.Now;
-            _context.Add(formularioRaiz);
+            if (solicitud.EsAprobada)
+            {
+
+                prestamo.IdCliente = int.Parse(idclaim.Value);
+                _context.Add(prestamo);
+                await _context.SaveChangesAsync();
+                
+
+                formularioRaiz.IdSolicitud = idsolicitud.IdSolicitud;
+                formularioRaiz.FechaAprobacion = DateTime.Now;
+                _context.Add(formularioRaiz);
+            }
+            else
+            {
+                formularioRechazo.Motivo = "No permitido";
+                formularioRechazo.FechaRechazo = DateTime.Now;
+                formularioRechazo.IdSolicitud = idsolicitud.IdSolicitud;
+                _context.Add(formularioRechazo);
+            }
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index","Home");
         }
 

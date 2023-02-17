@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ELCAPITAL.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ELCAPITAL.Controllers
 {
+    [Authorize]
     public class TarjetaDeCreditoesController : Controller
     {
         private readonly ELCAPITALContext _context;

@@ -9,10 +9,16 @@
     <thead>
         <tr>
             <th>
+                Id Solicitud
+            </th>
+            <th>
                 Tipo Solicitud
             </th>
             <th>
                 Fecha Solicitud
+            </th>
+            <th>
+                Estado
             </th>
         </tr>
     </thead>
@@ -20,10 +26,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.IdSolicitud)
+                </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.TipoSolicitud)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FechaSolicitud)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EsAprobada)
             </td>
         </tr>
 }
