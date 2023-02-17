@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ELCAPITAL.Migrations
 {
     /// <inheritdoc />
-    public partial class Dbv1 : Migration
+    public partial class Dbv2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

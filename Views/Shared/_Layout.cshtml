@@ -18,6 +18,11 @@
         a{
             text-decoration:none;
         }
+        footer{
+            position:absolute;
+            bottom:0;
+            width:100%;
+        }
     </style>
 </head>
 <body>
@@ -39,6 +44,12 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">INICIO</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Solicituds" asp-action="Index">MIS SOLICITUDES</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="TarjetaDeCreditoes" asp-action="Index">MIS TARJETAS</a>
                         </li>
                     </ul>
                 </div>
@@ -63,4 +74,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+<footer class="bg-dark">
+    <h1 class="text-light">.</h1>
+</footer>
 </html>

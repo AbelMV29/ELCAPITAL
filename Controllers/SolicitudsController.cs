@@ -65,22 +65,43 @@ namespace ELCAPITAL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateSolicitudPaquete([Bind("IdSolicitud,TipoSolicitud,FechaSolicitud,IdCliente")] Solicitud solicitud,
-           [Bind("EsCrediticio,IdProducto")] Paquete paquete)
+           [Bind("EsCrediticio,IdProducto")] Paquete paquete,FormularioRaiz formularioRaiz)
         {
+            Random r = new Random();
             var idclaim = User.Claims.FirstOrDefault(x => x.Type == "Id");
             solicitud.IdCliente = int.Parse(idclaim.Value);
             paquete.IdCliente = int.Parse(idclaim.Value);
             solicitud.TipoSolicitud = "Paquete";
             solicitud.FechaSolicitud = DateTime.Now;
+
                 _context.Add(solicitud);
             _context.Add(paquete);
             await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            var idProducto = _context.Producto.OrderByDescending(p => p.IdProducto).FirstOrDefault();
+
+            var idsolicitud = _context.Solicitudes.OrderByDescending(a=>a.IdSolicitud).FirstOrDefault();
+            if (paquete.EsCrediticio)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito();
+                    tarjetaDeCredito.IdProducto = idProducto.IdProducto;
+                    tarjetaDeCredito.CodigoTarjeta = r.Next(1000000, 9999999);
+                    _context.Add(tarjetaDeCredito);
+                }
+            }
+            formularioRaiz.IdSolicitud = idsolicitud.IdSolicitud;
+            formularioRaiz.FechaAprobacion = DateTime.Now;
+            _context.Add(formularioRaiz);
+            
+            
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Home");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateSolicitudPrestamo([Bind("IdSolicitud,TipoSolicitud,FechaSolicitud,IdCliente")] 
-        Solicitud solicitud, [Bind("EsPrendario,IdProducto")] Prestamo prestamo)
+        Solicitud solicitud, [Bind("EsPrendario,IdProducto")] Prestamo prestamo,FormularioRaiz formularioRaiz)
         {
             var idclaim = User.Claims.FirstOrDefault(x => x.Type == "Id");
             solicitud.IdCliente = int.Parse(idclaim.Value);
@@ -90,7 +111,11 @@ namespace ELCAPITAL.Controllers
             _context.Add(solicitud);
             _context.Add(prestamo);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var idsolicitud = _context.Solicitudes.OrderByDescending(a => a.IdSolicitud).FirstOrDefault();
+            formularioRaiz.IdSolicitud = idsolicitud.IdSolicitud;
+            formularioRaiz.FechaAprobacion = DateTime.Now;
+            _context.Add(formularioRaiz);
+            return RedirectToAction("Index","Home");
         }
 
         private bool SolicitudExists(int id)

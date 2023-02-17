@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ELCAPITAL.Migrations
 {
     [DbContext(typeof(ELCAPITALContext))]
-    [Migration("20230217021924_Dbv1")]
-    partial class Dbv1
+    [Migration("20230217062609_Dbv2")]
+    partial class Dbv2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

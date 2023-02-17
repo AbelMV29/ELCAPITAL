@@ -15,7 +15,9 @@
             <th>
                 Es Crediticio
             </th>
-            <th></th>
+            <th>
+                Detalles
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -27,6 +29,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EsCrediticio)
             </td>
+                 
+                <td>
+                    <a asp-action="Details">Detalles</a>
+                </td>
         </tr>
 }
     </tbody>

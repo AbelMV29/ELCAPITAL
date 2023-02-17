@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ELCAPITAL.Models;
+using System.Security.Claims;
 
 namespace ELCAPITAL.Controllers
 {
@@ -21,7 +22,8 @@ namespace ELCAPITAL.Controllers
         // GET: TarjetaDeCreditoes
         public async Task<IActionResult> Index()
         {
-            var eLCAPITALContext = _context.TarjetaDeCreditos.Include(t => t.Paquete);
+            var idclaim = User.Claims.FirstOrDefault(x => x.Type == "Id");
+            var eLCAPITALContext = _context.TarjetaDeCreditos.Include(p => p.Paquete).Where(a => a.Paquete.IdCliente == int.Parse(idclaim.Value));
             return View(await eLCAPITALContext.ToListAsync());
         }
 
