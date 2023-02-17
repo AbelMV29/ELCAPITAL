@@ -10,10 +10,12 @@ namespace ELCAPITAL.Controllers
     public class AccesoController : Controller
     {
         private readonly ELCAPITALContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AccesoController(ELCAPITALContext context)
+        public AccesoController(ELCAPITALContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
         public IActionResult Index()
         {
@@ -23,6 +25,7 @@ namespace ELCAPITAL.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(Cliente cliente)
         {
+            var httpContext = _httpContextAccessor.HttpContext; 
             var existeCliente = await _context.Cliente.FirstOrDefaultAsync
                 (c => c.NumeroDocumento==cliente.NumeroDocumento);
             if (existeCliente !=null)
@@ -32,7 +35,7 @@ namespace ELCAPITAL.Controllers
                     new Claim("Id",existeCliente.IdCliente.ToString())
                 };
                 var claimsIndetity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIndetity));
+                await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIndetity));
 
                 return RedirectToAction("Index","Home");
             }
@@ -48,7 +51,8 @@ namespace ELCAPITAL.Controllers
 
         public async Task<IActionResult> Salir()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            var httpContext = _httpContextAccessor.HttpContext;
+            await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index","Acceso");
 
         }

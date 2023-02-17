@@ -14,7 +14,8 @@ namespace ELCAPITAL
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
-            //builder.Services.AddHostedService<HostedService>();
+            builder.Services.AddHostedService<HostedService>();
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {
