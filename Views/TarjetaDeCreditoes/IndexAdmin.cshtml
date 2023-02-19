@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ELCAPITAL.Models.TarjetaDeCredito>
+
+@{
+    ViewData["Title"] = "IndexAdmin";
+}
+
+<h4>Tarjetas de Credito</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id Tarjeta de Credito
+            </th>
+            <th>
+                Numero De Tarjeta
+            </th>
+            <th>
+                Clave Tarjeta
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CVU)
+            </th>
+            <th>
+                Id Producto
+            </th>
+            <th>
+                Ajustes
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdProducto);
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoTarjeta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClaveTarjeta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CVU)
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem =>item.IdProducto)
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.IdTarjetaDeCredito">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

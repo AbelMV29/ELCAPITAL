@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ELCAPITAL.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.Build.Framework;
 
 namespace ELCAPITAL.Controllers
 {
@@ -27,8 +29,14 @@ namespace ELCAPITAL.Controllers
             var eLCAPITALContext = _context.Solicitudes.Include(s => s.Cliente).Where(b=>b.IdCliente== int.Parse(idclaim.Value));
             return View(await eLCAPITALContext.ToListAsync());
         }
+        [Authorize(Roles ="Admin")]
+        public async Task<IActionResult> IndexAdmin()
+        {
+            return View(await _context.Solicitudes.ToListAsync());
+        }
 
         // GET: Solicituds/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Solicitudes == null)
@@ -58,92 +66,126 @@ namespace ELCAPITAL.Controllers
 
             return View();
         }
+        public IActionResult Error(string codigo)
+        {
+
+            return View();
+        }
+        public IActionResult ErrorSolicutd()
+        {
+
+            return View();
+        }
+        [Authorize(Roles ="Admin")]
+        public async Task <IActionResult> AceptarSolicitud(int id,FormularioRaiz formularioRaiz)
+        {
+            var solicitud = await _context.Solicitudes.FindAsync(id);
+            var cliente = await _context.Cliente.FirstOrDefaultAsync(x => x.IdCliente == solicitud.IdCliente);
+            solicitud.Estado = "Aceptada";
+            if (solicitud.TipoSolicitud=="Paquete")
+            {
+                Paquete paquete = new Paquete();
+                paquete.IdCliente = cliente.IdCliente;
+                _context.Add(paquete);
+
+            }
+            else if(solicitud.TipoSolicitud=="Prestamo")
+            {
+                Prestamo prestamo = new Prestamo();
+                prestamo.IdCliente = cliente.IdCliente;
+                _context.Add(prestamo);
+                
+            }
+            formularioRaiz.IdSolicitud = solicitud.IdSolicitud;
+            formularioRaiz.FechaAprobacion = DateTime.Now;
+            _context.Add(formularioRaiz);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("IndexAdmin");
+        }
+        [Authorize(Roles ="Admin")]
+        public async Task<IActionResult> DenegarSolicitud(int id,FormularioRechazo formularioRechazo)
+        {
+            var solicitud = await _context.Solicitudes.FindAsync(id);
+            solicitud.Estado = "Denegada";
+            formularioRechazo.Motivo = "Motivos Personales ";
+            formularioRechazo.FechaRechazo = DateTime.Now;
+            formularioRechazo.IdSolicitud = solicitud.IdSolicitud;
+            _context.Add(formularioRechazo);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("IndexAdmin");
+        }
+
+
+        public async Task <IActionResult> ErrorSolicitud(Solicitud solicitud)
+        {
+            var idclaim = User.Claims.FirstOrDefault(x => x.Type == "Id");
+            var solicitudVigente = await _context.Solicitudes.Where(x => x.TipoSolicitud == "Prestamo").Where(x => x.IdCliente == int.Parse(idclaim.Value)).FirstOrDefaultAsync();
+            return View(solicitudVigente);
+        }
 
         // POST: Solicituds/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateSolicitudPaquete([Bind("IdSolicitud,TipoSolicitud,FechaSolicitud,IdCliente")] Solicitud solicitud,
-           [Bind("EsCrediticio,IdProducto")] Paquete paquete,FormularioRaiz formularioRaiz,FormularioRechazo formularioRechazo)
+        public async Task<IActionResult> CreateSolicitudPaquete([Bind("IdSolicitud,TipoSolicitud,FechaSolicitud,IdCliente")] Solicitud solicitud)
         {
-            Random r = new Random();
             var idclaim = User.Claims.FirstOrDefault(x => x.Type == "Id");
-            solicitud.IdCliente = int.Parse(idclaim.Value);
-            solicitud.TipoSolicitud = "Paquete";
-            solicitud.FechaSolicitud = DateTime.Now;
-            solicitud.EsAprobada = false;
-            _context.Add(solicitud);
-            await _context.SaveChangesAsync();
-            var idsolicitud = _context.Solicitudes.OrderByDescending(a => a.IdSolicitud).FirstOrDefault();
-
-            if (solicitud.EsAprobada)
+            var tieneSolicitudPaquete = _context.Solicitudes.Where(x => x.TipoSolicitud == "Paquete").Where(x => x.IdCliente == int.Parse(idclaim.Value)).FirstOrDefault();
+            if (tieneSolicitudPaquete != null && tieneSolicitudPaquete.Estado=="Pendiente")
             {
-                paquete.IdCliente = int.Parse(idclaim.Value);
-                _context.Add(paquete);
-                await _context.SaveChangesAsync();
-                var idProducto = _context.Producto.OrderByDescending(p => p.IdProducto).FirstOrDefault();
-
-                if (paquete.EsCrediticio)
-                {
-                    for (int i = 0; i < 3; i++)
-                    {
-                        TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito();
-                        tarjetaDeCredito.IdProducto = idProducto.IdProducto;
-                        tarjetaDeCredito.CodigoTarjeta = r.Next(1000000, 9999999);
-                        _context.Add(tarjetaDeCredito);
-                    }
-                    formularioRaiz.IdSolicitud = idsolicitud.IdSolicitud;
-                    formularioRaiz.FechaAprobacion = DateTime.Now;
-                    _context.Add(formularioRaiz);
-                }
+                return View("ErrorSolicitud",tieneSolicitudPaquete);
             }
             else
             {
-                formularioRechazo.Motivo = "No permitido";
-                formularioRechazo.FechaRechazo = DateTime.Now;
-                formularioRechazo.IdSolicitud = idsolicitud.IdSolicitud;
-                _context.Add(formularioRechazo);
+                var tienePaquete = _context.Paquete.FirstOrDefault(x => x.IdCliente == int.Parse(idclaim.Value));
+                if (tienePaquete != null)
+                {
+                    return View("Error",tieneSolicitudPaquete.TipoSolicitud);
+                }
+                else
+                {
+                    solicitud.IdCliente = int.Parse(idclaim.Value);
+                    solicitud.TipoSolicitud = "Paquete";
+                    solicitud.FechaSolicitud = DateTime.Now;
+                    solicitud.Estado = "Pendiente";
+                    _context.Add(solicitud);
+                    await _context.SaveChangesAsync();
+                    return View("SolicitudEnviada");
+                }
             }
-            
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateSolicitudPrestamo([Bind("IdSolicitud,TipoSolicitud,FechaSolicitud,IdCliente")] 
-        Solicitud solicitud, [Bind("EsPrendario,IdProducto")] Prestamo prestamo,FormularioRaiz formularioRaiz,FormularioRechazo formularioRechazo)
+        Solicitud solicitud, bool EsPrendario,FormularioRaiz formularioRaiz,FormularioRechazo formularioRechazo)
         {
             var idclaim = User.Claims.FirstOrDefault(x => x.Type == "Id");
-            solicitud.IdCliente = int.Parse(idclaim.Value);
-            solicitud.TipoSolicitud = "Prestamo";
-            solicitud.FechaSolicitud = DateTime.Now;
-            solicitud.EsAprobada = true;
-            _context.Add(solicitud);
-            await _context.SaveChangesAsync();
-            var idsolicitud = _context.Solicitudes.OrderByDescending(a => a.IdSolicitud).FirstOrDefault();
-            if (solicitud.EsAprobada)
+            
+            
+            //var idsolicitud = _context.Solicitudes.OrderByDescending(a => a.IdSolicitud).FirstOrDefault();
+            var tieneSolicitudPrestamo = _context.Solicitudes.Where(x=>x.TipoSolicitud=="Prestamo").Where(x=>x.IdCliente==int.Parse(idclaim.Value)).FirstOrDefault();
+            if (tieneSolicitudPrestamo!=null && tieneSolicitudPrestamo.Estado =="Pendiente")
             {
-
-                prestamo.IdCliente = int.Parse(idclaim.Value);
-                _context.Add(prestamo);
-                await _context.SaveChangesAsync();
-                
-
-                formularioRaiz.IdSolicitud = idsolicitud.IdSolicitud;
-                formularioRaiz.FechaAprobacion = DateTime.Now;
-                _context.Add(formularioRaiz);
+                return RedirectToAction("ErrorSolicitud",tieneSolicitudPrestamo);
             }
             else
             {
-                formularioRechazo.Motivo = "No permitido";
-                formularioRechazo.FechaRechazo = DateTime.Now;
-                formularioRechazo.IdSolicitud = idsolicitud.IdSolicitud;
-                _context.Add(formularioRechazo);
+                var tienePrestamo = _context.Prestamo.FirstOrDefault(x => x.IdCliente == int.Parse(idclaim.Value));
+                if (tienePrestamo != null)
+                {
+                    return View("Error", tieneSolicitudPrestamo.TipoSolicitud);
+                }
+                else
+                {
+                    solicitud.IdCliente = int.Parse(idclaim.Value);
+                    solicitud.TipoSolicitud = "Prestamo";
+                    solicitud.FechaSolicitud = DateTime.Now;
+                    solicitud.Estado = "Pendiente";
+                    _context.Add(solicitud);
+                    await _context.SaveChangesAsync();
+                    return View("SolicitudEnviada");
+                }
             }
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index","Home");
+            
         }
 
         private bool SolicitudExists(int id)

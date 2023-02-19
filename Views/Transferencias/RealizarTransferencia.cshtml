@@ -1,0 +1,44 @@
+﻿@model Cliente
+@{
+    ViewData["Title"] = "RealizarTransferencia";
+}
+
+<h4>REALIZAR TRANSFERENCIA </h4>
+
+<h6> CLIENTE ENCONTRADO </h6>
+<dl class="row">
+    <dt class="col-sm-2">
+        Id Cliente
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.IdCliente)
+    </dd>
+    <dt class="col-sm-2">
+        @if (Model is ELCAPITAL.Models.PersonaFisica)
+        {
+            <span>Nombre</span>
+        }
+        else
+        {
+            <span>Nombre Empresa</span>
+        }
+    </dt>
+    <dd class="col-sm-10">
+        @(Model is ELCAPITAL.Models.PersonaFisica ? ((ELCAPITAL.Models.PersonaFisica)Model).Nombre
+            : ((ELCAPITAL.Models.PersonaJuridica)Model).NombreEmpresa)
+    </dd>
+    <form asp-action="Pagar">
+        <div class="form-group">
+            <input type="hidden" name="idRecibe" value="@Model.IdCliente" />
+            <input type="hidden" name="cvu" value="@ViewData["cvu"]"/>
+            <label name="Monto"class="control-label">MONTO A TRANSFERIR</label>
+            <input name="Monto" class="form-control" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="TRANSFERIR" class="btn btn-dark" />
+        </div>
+    </form>
+</dl>
+</div>
+
+

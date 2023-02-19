@@ -5,6 +5,8 @@ namespace ELCAPITAL.Models
 {
     public class PersonaJuridica : Cliente
     {
+        [Required]
         public string NombreEmpresa { get; set; }
+
     }
 }

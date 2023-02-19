@@ -1,10 +1,10 @@
 ﻿@model List<ELCAPITAL.Models.Paquete>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Paquetes|EL CAPITAL";
 }
 
-<h1>MIS PAQUETES</h1>
+<h4>PAQUETES </h4>
 
 <table class="table">
     <thead>
@@ -13,11 +13,12 @@
                 Id Producto
             </th>
             <th>
-                Es Crediticio
+                Id Cliente
             </th>
             <th>
-                Detalles
+                Tarjetas
             </th>
+            
         </tr>
     </thead>
     <tbody>
@@ -27,12 +28,11 @@
                 @Html.DisplayFor(modelItem => item.IdProducto)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EsCrediticio)
+                @Html.DisplayFor(modelItem => item.IdCliente)
             </td>
-                 
-                <td>
-                    <a asp-action="Details">Detalles</a>
-                </td>
+             <td>
+                    <a asp-action="IndexAdmin" asp-controller="TarjetaDeCreditoes" asp-route-id="@item.IdProducto">Ver Tarjetas</a>
+             </td>
         </tr>
 }
     </tbody>

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ELCAPITAL.Models.Transferencia>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h4>TRANSFERENCIAS EN EL SISTEMA</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id Transferencia
+            </th>
+            <th>
+                Id Cliente
+            </th>
+            <th>
+                CVU Destino
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MontoTransferido)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdTransferencia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CVUDestino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MontoTransferido)
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.IdTransferencia">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

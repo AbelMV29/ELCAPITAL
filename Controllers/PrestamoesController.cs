@@ -21,12 +21,60 @@ namespace ELCAPITAL.Controllers
         }
 
         // GET: Prestamoes
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Index()
         {
+            return View(await _context.Prestamo.ToListAsync());
+        }
+        public async Task<IActionResult> IndexCliente()
+        {
             var idclaim = User.Claims.FirstOrDefault(x => x.Type == "Id");
+            var Prestamo = await _context.Prestamo.FirstOrDefaultAsync(b => b.IdCliente == int.Parse(idclaim.Value));
+            return View(Prestamo);
+        }
+        public IActionResult PedirPrestamo()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> PedirPrestamoPost([Bind("DineroPrestamo")] Prestamo prestamo)
+        {
+            var idclaim = User.Claims.FirstOrDefault(x => x.Type == "Id");
+            var user = await _context.Cliente.FirstOrDefaultAsync(z => z.IdCliente == int.Parse(idclaim.Value));
+            var tieneUno = await _context.Prestamo.FirstOrDefaultAsync(x => x.IdCliente == int.Parse(idclaim.Value));
+            if (tieneUno != null && tieneUno.DineroPrestamo == 0)
+            {
+                if (prestamo.DineroPrestamo < 300000)
+                {
 
-            var eLCAPITALContext = _context.Prestamo.Include(p => p.Cliente).Where(b => b.IdCliente == int.Parse(idclaim.Value));
-            return View(await eLCAPITALContext.ToListAsync());
+                    var prestamoDb = await _context.Prestamo.FirstOrDefaultAsync(a => a.IdCliente == int.Parse(idclaim.Value));
+                    var sueldoBanco = await _context.ElCapitalFondos.FirstAsync(x => x.IdBancoUnico == 1);
+                    if ((sueldoBanco.FondoMonetario - prestamoDb.DineroPrestamo) <= 0)
+                    {
+                        return View("SinFondos");
+                    }
+                    else
+                    {
+                        prestamoDb.DineroPrestamo = prestamo.DineroPrestamo;
+                        user.DineroEnCuenta += prestamo.DineroPrestamo;
+                        sueldoBanco.FondoMonetario -= prestamoDb.DineroPrestamo;
+                        prestamoDb.FechaLimite = DateTime.Now.AddDays(5);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                else
+                {
+                    return View("LimiteSobrepasado");
+                }
+            }
+            else
+            {
+                return View("TienePrestamo");
+            }
+            
+            
+            
         }
 
 

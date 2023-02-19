@@ -22,6 +22,12 @@ namespace ELCAPITAL.Controllers
         }
 
         // GET: TarjetaDeCreditoes
+
+        public async Task<IActionResult> IndexAdmin(int id)
+        {
+            var tarjetas = await _context.TarjetaDeCreditos.Where(x => x.IdProducto == id).ToListAsync();
+            return View(tarjetas);
+        }
         public async Task<IActionResult> Index()
         {
             var idclaim = User.Claims.FirstOrDefault(x => x.Type == "Id");
@@ -48,28 +54,26 @@ namespace ELCAPITAL.Controllers
             return View(tarjetaDeCredito);
         }
 
-        // GET: TarjetaDeCreditoes/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int id)
         {
-            ViewData["IdProducto"] = new SelectList(_context.Paquete, "IdProducto", "CualProducto");
-            return View();
-        }
-
-        // POST: TarjetaDeCreditoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTarjetaDeCredito,CodigoTarjeta,IdProducto")] TarjetaDeCredito tarjetaDeCredito)
-        {
-            if (ModelState.IsValid)
+            var countTarj = await _context.TarjetaDeCreditos.Where(x => x.IdProducto == id).ToListAsync();
+            if (countTarj.Count<3)
             {
-                _context.Add(tarjetaDeCredito);
+                Random r = new Random();
+                TarjetaDeCredito tarjetaDeCredito = new TarjetaDeCredito();
+                tarjetaDeCredito.IdProducto = id;
+                tarjetaDeCredito.ClaveTarjeta = r.Next(100, 999);
+                tarjetaDeCredito.CVU = r.Next(10000000, 99999999);
+                tarjetaDeCredito.CodigoTarjeta = r.Next(100000000, 999999999);
+                await _context.AddAsync(tarjetaDeCredito);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
             }
-            ViewData["IdProducto"] = new SelectList(_context.Paquete, "IdProducto", "CualProducto", tarjetaDeCredito.IdProducto);
-            return View(tarjetaDeCredito);
+            else
+            {
+                return View("MaximoTarjeta");
+            }
+            
         }
 
         // GET: TarjetaDeCreditoes/Edit/5

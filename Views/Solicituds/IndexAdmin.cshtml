@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ELCAPITAL.Models.Solicitud>
+@{
+    ViewData["Title"] = "IndexAdmin";
+}
+
+<h1>SOLICITUDES EN EL SISTEMA</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id Cliente
+            </th>
+            <th>
+                Id Solicitud
+            </th>
+            <th>
+                Tipo Solicitud
+            </th>
+            <th>
+                Fecha Solicitud
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+                Aceptar/Denegar
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem =>item.IdCliente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdSolicitud)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoSolicitud)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaSolicitud)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @if (item.Estado=="Pendiente")
+                    {
+                         <a asp-action="AceptarSolicitud" asp-controller="Solicituds" asp-route-id="@item.IdSolicitud" ><button type="button" class="btn btn-success">ACEPTAR</button></a>
+                        <a asp-action="DenegarSolicitud" asp-controller="Solicituds" asp-route-id="@item.IdSolicitud" ><button type="button" class="btn btn-danger">DENEGAR</button></a>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

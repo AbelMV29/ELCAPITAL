@@ -1,0 +1,44 @@
+﻿@model Prestamo
+
+@{
+    ViewData["Title"] = "Prestamos";
+}
+
+<h4>PRESTAMOS</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id Producto
+            </th>
+            <th>
+                Es Prendario
+            </th>
+            <th>
+                Fecha Limite
+            </th>
+            <th>
+                Pedir Prestamo
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td>
+                    @Model.IdProducto
+                </td>
+                <td>
+                    @Model.EsPrendario
+                </td>
+                <td>
+                    @Model.FechaLimite
+                </td>
+                <td>
+                    <a asp-action="PedirPrestamo" asp-route-id="@Model.IdProducto">Pedir Prestamo</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

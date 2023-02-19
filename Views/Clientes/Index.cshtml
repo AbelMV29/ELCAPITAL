@@ -4,36 +4,74 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>CLIENTES DENTRO DEL SISTEMA</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                Id Cliente
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.TipoDocumento)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NumeroDocumento)
             </th>
-            <th></th>
+            <th>
+                Tipo Cliente
+            </th>
+            <th>
+                Nombre o Razon Social
+            </th>
+            <th>
+                Ingresos
+
+            </th>
+            <th>
+                Dinero En Cuenta
+            </th>
+            <th>
+                Ajustes
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.IdCliente)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.TipoDocumento)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NumeroDocumento)
             </td>
+                <td>@if(item is ELCAPITAL.Models.PersonaFisica)
+                    {
+                        <span>Fisica</span>
+                    }
+                    else
+                    {
+                        <span>Juridica</span>
+                    }
+
+            </td>
+                <td>
+                    Ingresos 
+                </td>
+            <td>@(item is ELCAPITAL.Models.PersonaFisica ? ((ELCAPITAL.Models.PersonaFisica)item).Nombre : ((ELCAPITAL.Models.PersonaJuridica)item).NombreEmpresa)
+
+            </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdCliente">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdCliente">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdCliente">Delete</a>
+                $ @Html.DisplayFor(modelItem => item.Ingresos)
+            </td>
+            <td>
+                    $ @Html.DisplayFor(modelItem => item.DineroEnCuenta)
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.IdCliente">Eliminar</a>
             </td>
         </tr>
 }

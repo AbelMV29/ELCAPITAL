@@ -11,7 +11,7 @@ namespace ELCAPITAL.Models
         [Required]
         public string Motivo { get; set; }
 
-        public DateTime FechaRechazo { get; set; }
+        public DateTime? FechaRechazo { get; set; }
         [Required]
         public int IdSolicitud { get; set; }
         [ForeignKey("IdSolicitud")]

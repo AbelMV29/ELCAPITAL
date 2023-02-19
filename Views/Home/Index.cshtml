@@ -1,40 +1,101 @@
-﻿@{
+﻿@model Cliente
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="container-fluid">
+    <h4>Bienvenido @ViewData["Nombre"]</h4>
+    @if (User.IsInRole("Cliente"))
+    {
+        <div class="col-3 bg-dark p-2 text-white" style="border-radius:1em">SALDO EN CUENTA : $@Model.DineroEnCuenta</div>
+    }
+    
     <div class="row mt-4 gx-5 justify-content-center">
         <div class="col-2 border border-secondary border border-2 p-3 mx-1">
             <div class="row">
                 <div class="col">
-                    <p>VER MIS PAQUETES</p>
-                    <a asp-action="Index" asp-controller="Paquetes"><button type="button" class="btn btn-dark">MIS PAQUETES</button></a>
+                     @if(User.IsInRole("Cliente"))
+                    {
+                        <p>VER MIS PAQUETES</p>
+                        <a asp-action="IndexCliente" asp-controller="Paquetes"><button type="button" class="btn btn-dark">MIS PAQUETES</button></a>
+                    }
+                    else if(User.IsInRole("Admin"))
+                    {
+                        <p>CLIENTES </p>
+                        <a asp-action="Index" asp-controller="Clientes"><button type="button" class="btn btn-dark">VER CLIENTES</button></a>
+                    }
+
                 </div>
             </div>
         </div>
         <div class="col-2 border border-secondary border border-2 p-3 mx-1">
             <div class="row">
                 <div class="col">
-                    <p>VER MIS PRESTAMOS</p>
-                    <a asp-action="Index" asp-controller="Prestamoes"><button type="button" class="btn btn-dark">MIS PRESTAMOS</button></a>
+                    @if (User.IsInRole("Cliente"))
+                    {
+                        <p>VER MIS PRESTAMOS</p>
+                    <a asp-action="IndexCliente" asp-controller="Prestamoes"><button type="button" class="btn btn-dark">MIS PRESTAMOS</button></a>
+                    }
+                    else if(User.IsInRole("Admin"))
+                    {
+                        <p>SOLICITUDES</p>
+                        <a asp-action="IndexAdmin" asp-controller="Solicituds"><button type="button" class="btn btn-dark">VER SOLICITUDES</button></a>
+                    }
+                    
                 </div>
             </div>
             </div>
         <div class="col-2 border border-secondary border border-2 p-3 mx-1">
             <div class="row">
                 <div class="col">
-                    <p>SOLICITAR PAQUETE</p>
-                    <a asp-action="CreateSolicitudPaquete" asp-controller="Solicituds"><button type="button" class="btn btn-dark">SOLICITAR</button></a>
+                    @if (User.IsInRole("Cliente"))
+                    {
+                        <p>SOLICITAR PAQUETE</p>
+                        <a asp-action="CreateSolicitudPaquete" asp-controller="Solicituds"><button type="button" class="btn btn-dark">SOLICITAR</button></a>
+                    }
+                    else if(User.IsInRole("Admin"))
+                    {
+                        <p>VER PAQUETES</p>
+                        <a asp-action="Index" asp-controller="Paquetes"><button type="button" class="btn btn-dark">VER PAQUETES</button></a>
+                    }
                 </div>
                 </div>
             </div>
             <div class="col-2 border border-secondary border border-2 p-3 mx-1">
         <div class="row">
          <div class="col">
-                    <p>SOLICITAR PRESTAMO</p>
-                    <a asp-action="CreateSolicitudPrestamo" asp-controller="Solicituds"><button type="button" class="btn btn-dark">SOLICITAR</button></a>
+                    @if (User.IsInRole("Cliente"))
+                    {
+                        <p>SOLICITAR PRESTAMO</p>
+                        <a asp-action="CreateSolicitudPrestamo" asp-controller="Solicituds" button type="button" class="btn btn-dark">SOLICITAR</a>
+                    }
+                    else if (User.IsInRole("Admin"))
+                    {
+                        <p>VER PRODUCTOS</p>
+                        <a asp-action="Index" asp-controller="Prestamoes"><button type="button" class="btn btn-dark">VER PRESTAMOS</button></a>
+                    }
+                    
                 </div>
+                </div>
+            
+            </div>
+        </div>
+    <div class="row mt-4 gx-5 justify-content-center">
+        <div class="col-2 border border-secondary border border-2 p-3 mx-1">
+            <div class="row">
+                <div class="col">
+                    @if (User.IsInRole("Cliente"))
+                    {
+                        <p>TRANSFERENCIAS</p>
+                        <a asp-action="CreateCVU" asp-controller="Transferencias" button type="button" class="btn btn-dark">REALIZAR</a>
+                    }
+                    else if (User.IsInRole("Admin"))
+                    {
+                        <P>TRANSFERENCIAS</P>
+                        <a asp-action="Index" asp-controller="Transferencias" button type="button" class="btn btn-dark">VER TRANSFERENCIAS</a>
+                    }
                 </div>
             </div>
+        </div>
         </div>
     </div>   

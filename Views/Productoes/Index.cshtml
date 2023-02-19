@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ELCAPITAL.Models.Producto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>PRODUCTOS DENTRO DEL SISTEMA</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id Producto
+            </th>
+            <th>
+                Id Cliente
+            </th>
+            <th>
+                Tipo Producto
+            </th>
+            <th>
+                Ajustes
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdProducto)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdCliente)
+                </td>
+                <td>
+                    @if (item is ELCAPITAL.Models.Paquete)
+                    {
+                        <span>Paquete</span>
+                    }
+                    else
+                    {
+                        <span>Prestamo</span>
+                    }
+                </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.IdProducto">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

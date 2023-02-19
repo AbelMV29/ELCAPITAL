@@ -58,8 +58,18 @@ namespace ELCAPITAL
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Acceso}/{action=Index}/{id?}");
-            
+            //Creacion del Fondo Unico del Banco
+            using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ELCAPITALContext>();
 
+                if (!context.ElCapitalFondos.Any())
+                {
+                    var fondo = new ElCapitalFondos { FondoMonetario = 5000000 };
+                    context.ElCapitalFondos.Add(fondo);
+                    context.SaveChanges();
+                }
+            }
             app.Run();
         }
     }

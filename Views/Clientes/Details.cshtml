@@ -1,10 +1,10 @@
 ﻿@model ELCAPITAL.Models.Cliente
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "MI CUENTA";
 }
 
-<h1>Details</h1>
+<h1>MI CUENTA</h1>
 
 <div>
     <h4>Cliente</h4>
@@ -22,9 +22,26 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.NumeroDocumento)
         </dd>
+        <dt class="col-sm-2">
+            @if (Model is ELCAPITAL.Models.PersonaFisica)
+            {
+                <span>Nombre</span>
+            }
+            else
+            {
+                <span>Nombre Empresa</span>
+            }
+        </dt>
+        <dd class="col-sm-10">
+            @(Model is ELCAPITAL.Models.PersonaFisica ? ((ELCAPITAL.Models.PersonaFisica)Model).Nombre
+                : ((ELCAPITAL.Models.PersonaJuridica)Model).NombreEmpresa)
+        </dd>
+        <dt class="col-sm2">
+            Ingresos
+        </dt>
+        <dd class="col-sm-10">
+            $ @Html.DisplayFor(model => model.Ingresos)
+        </dd>
+        
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdCliente">Edit</a> |
-    <a asp-action="Index">Back to List</a>
 </div>

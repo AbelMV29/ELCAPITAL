@@ -1,0 +1,24 @@
+﻿@model string
+@{
+    ViewData["Title"] = "Error Solicitud";
+}
+<h5 class="text-danger">ERROR AL REALIZAR SU SOLICITUD</h5>
+@{
+    if (Model == "Prestamo")
+    {
+        <p>
+            No se puede realizar una soicitud de Prestamo al ya contar con un Prestamo vigente,
+            Limite de Prestamos por cuenta = 1
+        </p>
+    }
+    else if (Model == "Paquete")
+    {
+
+        <p>No se puede realizar una soicitud de Paquete al ya contar con un Paquete,
+           Limite de Paquetes por cuenta = 1
+        </p>
+    }
+}
+
+<a asp-action="Index" asp-controller="Home" class="btn btn-dark">VOLVER A INICIO</a>
+

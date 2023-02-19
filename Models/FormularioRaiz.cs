@@ -8,8 +8,7 @@ namespace ELCAPITAL.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdFormularioRaiz { get; set; }
-        [Required]
-        public DateTime FechaAprobacion { get; set; }
+        public DateTime? FechaAprobacion { get; set; }
         [Required]
         public int IdSolicitud { get;set; }
 

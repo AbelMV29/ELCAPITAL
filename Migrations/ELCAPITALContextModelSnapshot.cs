@@ -30,6 +30,13 @@ namespace ELCAPITAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCliente"));
 
+                    b.Property<decimal?>("DineroEnCuenta")
+                        .IsRequired()
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Ingresos")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("NumeroDocumento")
                         .HasColumnType("int");
 
@@ -50,6 +57,22 @@ namespace ELCAPITAL.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("ELCAPITAL.Models.ElCapitalFondos", b =>
+                {
+                    b.Property<int>("IdBancoUnico")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdBancoUnico"));
+
+                    b.Property<decimal>("FondoMonetario")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("IdBancoUnico");
+
+                    b.ToTable("ElCapitalFondos");
+                });
+
             modelBuilder.Entity("ELCAPITAL.Models.FormularioRaiz", b =>
                 {
                     b.Property<int>("IdFormularioRaiz")
@@ -58,7 +81,7 @@ namespace ELCAPITAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdFormularioRaiz"));
 
-                    b.Property<DateTime>("FechaAprobacion")
+                    b.Property<DateTime?>("FechaAprobacion")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("IdSolicitud")
@@ -80,7 +103,7 @@ namespace ELCAPITAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdFormularioRechazo"));
 
-                    b.Property<DateTime>("FechaRechazo")
+                    b.Property<DateTime?>("FechaRechazo")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("IdSolicitud")
@@ -156,8 +179,9 @@ namespace ELCAPITAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdSolicitud"));
 
-                    b.Property<bool>("EsAprobada")
-                        .HasColumnType("bit");
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FechaSolicitud")
                         .HasColumnType("datetime2");
@@ -184,8 +208,17 @@ namespace ELCAPITAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTarjetaDeCredito"));
 
+                    b.Property<int>("CVU")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClaveTarjeta")
+                        .HasColumnType("int");
+
                     b.Property<int>("CodigoTarjeta")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("DineroEnTarjeta")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("IdProducto")
                         .HasColumnType("int");
@@ -195,6 +228,33 @@ namespace ELCAPITAL.Migrations
                     b.HasIndex("IdProducto");
 
                     b.ToTable("TarjetaDeCreditos");
+                });
+
+            modelBuilder.Entity("ELCAPITAL.Models.Transferencia", b =>
+                {
+                    b.Property<int>("IdTransferencia")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTransferencia"));
+
+                    b.Property<int>("CVUDestino")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("FechaTrans")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdCliente")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("MontoTransferido")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("IdTransferencia");
+
+                    b.HasIndex("IdCliente");
+
+                    b.ToTable("transferencias");
                 });
 
             modelBuilder.Entity("ELCAPITAL.Models.PersonaFisica", b =>
@@ -233,8 +293,14 @@ namespace ELCAPITAL.Migrations
                 {
                     b.HasBaseType("ELCAPITAL.Models.Producto");
 
+                    b.Property<decimal>("DineroPrestamo")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<bool>("EsPrendario")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime?>("FechaLimite")
+                        .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("Prestamo");
                 });
@@ -305,6 +371,17 @@ namespace ELCAPITAL.Migrations
                     b.Navigation("Paquete");
                 });
 
+            modelBuilder.Entity("ELCAPITAL.Models.Transferencia", b =>
+                {
+                    b.HasOne("ELCAPITAL.Models.Cliente", "Cliente")
+                        .WithMany("Transferencias")
+                        .HasForeignKey("IdCliente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+                });
+
             modelBuilder.Entity("ELCAPITAL.Models.Cliente", b =>
                 {
                     b.Navigation("Productos");
@@ -312,6 +389,8 @@ namespace ELCAPITAL.Migrations
                     b.Navigation("Restricciones");
 
                     b.Navigation("Solicitudes");
+
+                    b.Navigation("Transferencias");
                 });
 
             modelBuilder.Entity("ELCAPITAL.Models.Solicitud", b =>

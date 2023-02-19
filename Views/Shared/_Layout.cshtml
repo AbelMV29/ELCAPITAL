@@ -45,19 +45,43 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">INICIO</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Solicituds" asp-action="Index">MIS SOLICITUDES</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="TarjetaDeCreditoes" asp-action="Index">MIS TARJETAS</a>
-                        </li>
+                        @if(User.IsInRole("Cliente"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Solicituds" asp-action="Index">MIS SOLICITUDES</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="TarjetaDeCreditoes" asp-action="Index">MIS TARJETAS</a>
+                            </li>
+                        }
+                        else if (User.IsInRole("Admin"))
+                        {
+                            
+                        }
+                        
                     </ul>
                 </div>
+                @if(User.IsInRole("Admin"))
+                {
+
+                    <div class="bg-danger m-2 p-2 text-white" style="border-radius:1em">ADMINISTRADOR</div>
+                }
+                else if (User.IsInRole("Cliente"))
+                {
+                    
+                    <div class="bg-success m-2 p-2 text-white" style="border-radius:1em">PLAN BASICO</div>
+                }
                 <div class="dropdown">
                   <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     CUENTA
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        @if (User.IsInRole("Cliente"))
+                        {
+                            var idclaim = User.Claims.FirstOrDefault(x => x.Type == "Id");
+
+                            <li><a class="dropdown-item" asp-controller="Clientes" asp-action="Details" asp-route-id="@int.Parse(idclaim.Value)">MI CUENTA</a></li>
+                        }
                     <li><a class="dropdown-item" asp-controller="Acceso" asp-action="Salir">SALIR</a></li>
                     </ul>
                 </div>

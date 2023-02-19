@@ -10,6 +10,7 @@ namespace ELCAPITAL.Models
         public int IdRestriccion { get; set; }
 
         public string? Motivo { get; set; }
+        [Required]
         public DateTime FechaAlta { get; set; }
         [Required]
         public int IdCliente { get; set; }

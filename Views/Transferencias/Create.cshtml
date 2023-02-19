@@ -1,4 +1,4 @@
-﻿@model ELCAPITAL.Models.TarjetaDeCredito
+﻿@model ELCAPITAL.Models.Transferencia
 
 @{
     ViewData["Title"] = "Create";
@@ -6,20 +6,20 @@
 
 <h1>Create</h1>
 
-<h4>TarjetaDeCredito</h4>
+<h4>Transferencia</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CodigoTarjeta" class="control-label"></label>
-                <input asp-for="CodigoTarjeta" class="form-control" />
-                <span asp-validation-for="CodigoTarjeta" class="text-danger"></span>
+                <label asp-for="MontoTransferido" class="control-label"></label>
+                <input asp-for="MontoTransferido" class="form-control" />
+                <span asp-validation-for="MontoTransferido" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdProducto" class="control-label"></label>
-                <select asp-for="IdProducto" class ="form-control" asp-items="ViewBag.IdProducto"></select>
+                <label asp-for="IdCliente" class="control-label"></label>
+                <select asp-for="IdCliente" class ="form-control" asp-items="ViewBag.IdCliente"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

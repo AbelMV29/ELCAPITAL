@@ -14,6 +14,8 @@ namespace ELCAPITAL.Models
         public DbSet<Restriccion> Restriccions { get; set; }
         public DbSet<Solicitud> Solicitudes { get; set; }
         public DbSet<TarjetaDeCredito> TarjetaDeCreditos { get; set; }
+        public DbSet<ElCapitalFondos> ElCapitalFondos { get; set; }
+        public DbSet<Transferencia> transferencias { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelbuider)
         {
@@ -21,6 +23,10 @@ namespace ELCAPITAL.Models
                 .HasDiscriminator<string>("TipoCliente")
                 .HasValue<PersonaFisica>("PersonaFisica")
                 .HasValue<PersonaJuridica>("PersonJuridica");
+
+            modelbuider.Entity<Transferencia>()
+                .HasOne(x => x.Cliente)
+                .WithMany(x => x.Transferencias);
 
             modelbuider.Entity<Solicitud>()
                 .HasOne(a => a.Cliente)

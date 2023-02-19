@@ -1,0 +1,37 @@
+﻿@model Paquete
+@{
+    ViewData["Title"] = "Index Cliente";
+}
+
+<h4>MI PAQUETE</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id Producto
+            </th>
+            <th>
+                Es Crediticio
+            </th>
+            <th>
+                Tarjetas
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td>
+                    @Model.IdProducto
+                </td>
+                <td>
+                    @Model.EsCrediticio
+                </td>
+                <td>
+                    <a asp-action="Create" asp-controller="TarjetaDeCreditoes" asp-route-id="@Model.IdProducto">Agregar Tarjeta</a>
+                    <a asp-action="Index" asp-controller="TarjetaDeCreditoes" asp-route-id="@Model.IdProducto">Ver Tarjetas</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

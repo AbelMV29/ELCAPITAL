@@ -7,7 +7,10 @@ namespace ELCAPITAL.Models
     {
         [Required]
         public bool EsPrendario { get; set; }
+        public decimal DineroPrestamo { get; set; }
+
         public string Nombre = "Prestamo";
+        public DateTime? FechaLimite { get; set; }
 
     }
 }

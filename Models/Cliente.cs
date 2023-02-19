@@ -9,9 +9,15 @@ namespace ELCAPITAL.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdCliente { get; set; }
         [Required]
-        public string? TipoDocumento { get; set; }
+        public string TipoDocumento { get; set; }
         [Required]
         public int NumeroDocumento { get; set; }
+        [Required]
+        public decimal Ingresos { get; set; }
+        [Required]
+        public decimal? DineroEnCuenta { get; set; }
+
+        public List<Transferencia>? Transferencias { get; set; }
 
         public List<Producto>? Productos { get; set; }
 

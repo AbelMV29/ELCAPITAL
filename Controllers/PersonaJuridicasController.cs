@@ -53,17 +53,13 @@ namespace ELCAPITAL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("NombreEmpresa,IdCliente,TipoDocumento,NumeroDocumento")] PersonaJuridica personaJuridica)
+        public async Task<IActionResult> Create([Bind("NombreEmpresa,IdCliente,TipoDocumento,NumeroDocumento,Ingresos")] PersonaJuridica personaJuridica)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(personaJuridica);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index","Acceso");
-            }
-            return View(personaJuridica);
+            personaJuridica.DineroEnCuenta = 0;
+            _context.Add(personaJuridica);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Acceso");
         }
-
         // GET: PersonaJuridicas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

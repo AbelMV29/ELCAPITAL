@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ELCAPITAL.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Build.Framework;
 
 namespace ELCAPITAL.Controllers
 {
@@ -21,12 +22,17 @@ namespace ELCAPITAL.Controllers
         }
 
         // GET: Paquetes
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Index()
         {
-            var idclaim = User.Claims.FirstOrDefault(x => x.Type == "Id");
+            return View(await _context.Paquete.ToListAsync());                      
+        }
 
-            var eLCAPITALContext = _context.Paquete.Include(p => p.Cliente).Where(b=>b.IdCliente==int.Parse(idclaim.Value));
-            return View(await eLCAPITALContext.ToListAsync());
+        public async Task<IActionResult> IndexCliente()
+        {
+            var idclaim = User.Claims.FirstOrDefault(x => x.Type == "Id");
+            var Paquete = await _context.Paquete.FirstOrDefaultAsync(b => b.IdCliente == int.Parse(idclaim.Value));
+            return View( Paquete);
         }
 
         // GET: Paquetes/Details/5

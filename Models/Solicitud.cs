@@ -11,7 +11,8 @@ namespace ELCAPITAL.Models
         [Required]
         public string TipoSolicitud { get; set; }
         [Required]
-        public bool EsAprobada { get; set; }
+        public string Estado { get; set; }
+        [Required]
         public DateTime FechaSolicitud { get; set; }
         [Required]
         public int IdCliente { get; set; }

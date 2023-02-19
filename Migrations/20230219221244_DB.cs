@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ELCAPITAL.Migrations
 {
     /// <inheritdoc />
-    public partial class Dbv1 : Migration
+    public partial class DB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,6 +19,8 @@ namespace ELCAPITAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TipoDocumento = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumeroDocumento = table.Column<int>(type: "int", nullable: false),
+                    Ingresos = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DineroEnCuenta = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TipoCliente = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NombreEmpresa = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -26,6 +28,19 @@ namespace ELCAPITAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cliente", x => x.IdCliente);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ElCapitalFondos",
+                columns: table => new
+                {
+                    IdBancoUnico = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FondoMonetario = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ElCapitalFondos", x => x.IdBancoUnico);
                 });
 
             migrationBuilder.CreateTable(
@@ -37,7 +52,9 @@ namespace ELCAPITAL.Migrations
                     IdCliente = table.Column<int>(type: "int", nullable: false),
                     CualProducto = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EsCrediticio = table.Column<bool>(type: "bit", nullable: true),
-                    EsPrendario = table.Column<bool>(type: "bit", nullable: true)
+                    EsPrendario = table.Column<bool>(type: "bit", nullable: true),
+                    DineroPrestamo = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    FechaLimite = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -78,7 +95,7 @@ namespace ELCAPITAL.Migrations
                     IdSolicitud = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TipoSolicitud = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EsAprobada = table.Column<bool>(type: "bit", nullable: false),
+                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaSolicitud = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IdCliente = table.Column<int>(type: "int", nullable: false)
                 },
@@ -94,12 +111,37 @@ namespace ELCAPITAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "transferencias",
+                columns: table => new
+                {
+                    IdTransferencia = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MontoTransferido = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    FechaTrans = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CVUDestino = table.Column<int>(type: "int", nullable: false),
+                    IdCliente = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_transferencias", x => x.IdTransferencia);
+                    table.ForeignKey(
+                        name: "FK_transferencias_Cliente_IdCliente",
+                        column: x => x.IdCliente,
+                        principalTable: "Cliente",
+                        principalColumn: "IdCliente",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TarjetaDeCreditos",
                 columns: table => new
                 {
                     IdTarjetaDeCredito = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CodigoTarjeta = table.Column<int>(type: "int", nullable: false),
+                    ClaveTarjeta = table.Column<int>(type: "int", nullable: false),
+                    CVU = table.Column<int>(type: "int", nullable: false),
+                    DineroEnTarjeta = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     IdProducto = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -119,7 +161,7 @@ namespace ELCAPITAL.Migrations
                 {
                     IdFormularioRaiz = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FechaAprobacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FechaAprobacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IdSolicitud = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -140,7 +182,7 @@ namespace ELCAPITAL.Migrations
                     IdFormularioRechazo = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Motivo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FechaRechazo = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FechaRechazo = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IdSolicitud = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -185,11 +227,19 @@ namespace ELCAPITAL.Migrations
                 name: "IX_TarjetaDeCreditos_IdProducto",
                 table: "TarjetaDeCreditos",
                 column: "IdProducto");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_transferencias_IdCliente",
+                table: "transferencias",
+                column: "IdCliente");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ElCapitalFondos");
+
             migrationBuilder.DropTable(
                 name: "FormularioRaizs");
 
@@ -201,6 +251,9 @@ namespace ELCAPITAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "TarjetaDeCreditos");
+
+            migrationBuilder.DropTable(
+                name: "transferencias");
 
             migrationBuilder.DropTable(
                 name: "Solicitudes");

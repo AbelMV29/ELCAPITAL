@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ELCAPITAL.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ELCAPITAL.Controllers
 {
@@ -19,6 +20,7 @@ namespace ELCAPITAL.Controllers
         }
 
         // GET: Clientes
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Index()
         {
               return View(await _context.Cliente.ToListAsync());
